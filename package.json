@@ -1,0 +1,7 @@
+{
+    "name": "docsify-bpmnio",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "gsdenys <gsdenys@gmail.com>",
+    "license": "MIT"
+  }
