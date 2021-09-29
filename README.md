@@ -1,20 +1,20 @@
-# docsify-drawio
+# docsify-bpmnio
 
-This is a docsify plugin that can convert drawio xml Data to a picture in your docs.
+This is a docsify plugin that can convert BPMN xml data to a picture in your docs.
 
 ## First - write your drawio File Path in Your Markdown File
 
 ```md
-[filename](https://cdn.jsdelivr.net/npm/docsify-drawio/test.drawio ':include :type=code')
+[filename](https://cdn.jsdelivr.net/npm/docsify-drawio/test.bpmn ':include :type=bpmn')
 ```
 
 ## Second - Add Some Script in your docsify html File.
 
-!! It must put after your window.$docsify 
+!! It must put in the header section 
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/docsify-drawio/viewer.min.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/docsify-drawio/drawio.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-bpmnio/viewer.min.js"></script>
+<script src='https://cdn.jsdelivr.net/npm/docsify-bpmnio/bpmnio.js'></script>
 ```
 
 ## Third - Add A Markdown render function in your $docsify.
@@ -25,13 +25,12 @@ window.$docsify = {
     markdown: {
       renderer: {
 
-        code: function (code, lang) {
-          if (lang === 'drawio') {
-            if (window.drawioConverter) {
-              console.log('drawio 转化中')
-              return window.drawioConverter(code)
+        code: function (bpmn, lang) {
+          if (lang === 'bpmn') {
+            if (window.bpmnioConverter) {
+              return window.bpmnioConverter(bpmn)
             } else {
-              return `<div class='drawio-code'>${code}</div>`
+              return `<div class='bpmnio-code'>No bpmn.io converter</div>`
             }
           } else {
             return this.origin.code.apply(this, arguments);
@@ -40,15 +39,8 @@ window.$docsify = {
       }
     },
   };
-
 ```
 
 ## Some detail
 
-Because I haven't find a smaller plugin to convert drawio File to HTML, so I use the js File from  [viewer.min.js](https://github.com/jgraph/drawio/blob/dev/src/main/webapp/js/viewer.min.js) to convert it.
-
-And I put this File to npm repo, so that I could use it by jsdelivr or other cdn.
-
-## If you like it!
-
-[Gitee 仓库](https://gitee.com/dongzhongzhidong/docsify-drawio)
+The __viewer.min.js__ is the minified [bpmn.io](http://bpmn.io) viewer. The unique utility of this viewer is generate the SVG file, once done the viewer is removed from the page.
