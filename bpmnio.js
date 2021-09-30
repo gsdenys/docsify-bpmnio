@@ -97,13 +97,13 @@ function ready() {
             var svgPositionX = g.getBoundingClientRect().x
             var divPositionX = svg.getBoundingClientRect().x
 
-            svg.style.width = svgSizeX + (svgPositionX - divPositionX)
+            svg.style.width = svgSizeX + (svgPositionX - divPositionX) + "px"
 
             var svgSizeY = g.getBoundingClientRect().height
             var svgPositionY = g.getBoundingClientRect().y
             var divPositionY = svg.getBoundingClientRect().y
 
-            svg.style.height = svgSizeY + (svgPositionY - divPositionY)
+            svg.style.height = svgSizeY + (svgPositionY - divPositionY) + "px"
         }
     });
 }
