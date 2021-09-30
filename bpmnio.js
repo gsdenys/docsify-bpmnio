@@ -109,6 +109,6 @@ function ready() {
 }
 
 window.onload = function () {
-    setTimeout(ready, 128)
+    setTimeout(ready, 340)
 }
 
