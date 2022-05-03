@@ -17,6 +17,128 @@ function escape(string) {
   });
 }
 
+
+/* ######################################
+ *                 MODAL
+ * ######################################
+ */
+
+(function () {
+	document.querySelectorAll(".open-modal").forEach(function (trigger) {
+		trigger.addEventListener("click", function () {
+			hideAllModalWindows();
+			showModalWindow(this);
+		});
+	});
+	
+	document.querySelectorAll(".modal-hide").forEach(function (closeBtn) {
+		closeBtn.addEventListener("click", function () {
+			hideAllModalWindows();
+		});
+	});
+})();
+
+function showModalWindow () {
+	var modalTarget = "#bpmnio-modal-panel";
+	
+	document.querySelector(".modal-fader").className += " active";
+	document.querySelector(modalTarget).className += " active";
+}
+
+function hideAllModalWindows () {
+	var modalFader = document.querySelector(".modal-fader");
+	var modalWindows = document.querySelectorAll(".modal-window");
+	
+	if(modalFader.className.indexOf("active") !== -1) {
+		modalFader.className = modalFader.className.replace("active", "");
+	}
+	
+	modalWindows.forEach(function (modalWindow) {
+		if(modalWindow.className.indexOf("active") !== -1) {
+			modalWindow.className = modalWindow.className.replace("active", "");
+		}
+	});
+}
+
+/* ######################################
+ *             DOCUMENTATION
+ * ######################################
+ */
+const getHTML = function(title, doc) {
+  var button = `<button class="modal-btn modal-hide" onclick="closeModal()">Close</button>`
+  var father = `<div class="modal-fader"></div>`
+
+  return `<div id="bpmnio-modal-panel" class="modal-window">
+                <h2>${title}</h2>
+                <p>${doc}</p>
+                <div class="modal-footer-btn">${button}</div>
+            </div>${father}`
+}
+
+const closeModal = function() {
+  hideAllModalWindows()
+  document.getElementById('bpmnio-modal-panel').remove()
+}
+
+const createModal = function (el, title, doc) {
+  var modal = document.createElement("div")
+
+  modal.innerHTML = getHTML(title, doc)
+
+  el._container.parentNode.appendChild(modal);
+
+  showModalWindow ()
+}
+
+const ignoretype = [
+  'bpmn:Collaboration',
+  'label',
+  "bpmn:Participant"
+]
+
+/// load heatmap after the bpmn is loaded
+function genereteDoc(bpmnJS, canvas) {
+  var registry = bpmnJS.get('elementRegistry');
+  var canvas = bpmnJS.get('canvas');
+
+  eventElements = []
+
+  for (var i in registry.getAll()) {
+      var element = registry.getAll()[i];
+
+      var id   = element.id
+      var type = element.type
+      var name = element.businessObject.name
+      var doc  = element.businessObject.documentation
+
+      if (doc && !ignoretype.includes(type)) {
+          var el = canvas.getGraphics(element)
+
+          var dc = doc[0].text
+
+          eventElements.push({el, id, type, name,  dc})
+      }
+  }
+
+  Array.from(eventElements).forEach(element => {
+      element.el.onmouseenter = function () {
+          element.el.style.cursor = "pointer"
+      }
+
+      element.el.onmouseleave = function () {
+          element.el.style.cursor = "default"
+      }
+
+      element.el.onclick = function () {
+          createModal(canvas, element.name, element.dc)
+      }
+  })
+}
+
+/* ######################################
+ *               CONVERTER
+ * ######################################
+ */
 (function () {
   var idList = []
   const dtPrefix = "data"
@@ -141,6 +263,8 @@ function escape(string) {
     var canvas = viewer.get("canvas");
     
     await viewer.importXML(xmlData)
+
+    genereteDoc(viewer, canvas)
 
     return canvas
   }
