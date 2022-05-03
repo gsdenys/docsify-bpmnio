@@ -1,5 +1,3 @@
-
-
 //escape function to mantain the XML consistent when inside the
 //HTML property
 function escape(string) {
