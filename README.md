@@ -40,7 +40,3 @@ window.$docsify = {
     },
   };
 ```
-
-## Some detail
-
-The __viewer.min.js__ is the minified [bpmn.io](http://bpmn.io) viewer. The unique utility of this viewer is generate the SVG file, once done the viewer is removed from the page.
