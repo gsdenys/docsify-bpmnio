@@ -8,11 +8,12 @@ This is a docsify plugin that can convert BPMN xml data to a picture in your doc
 [filename](https://cdn.jsdelivr.net/npm/docsify-drawio/test.bpmn ':include :type=bpmn')
 ```
 
-## Second - Add Some Script in your docsify html File.
+## Second - Add these lines in your docsify html File.
 
 !! It must put in the header section 
 
 ```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-bpmnio/style.css" />
 <script src="https://cdn.jsdelivr.net/npm/docsify-bpmnio/viewer.min.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/docsify-bpmnio/bpmnio.js'></script>
 ```
