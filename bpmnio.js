@@ -114,7 +114,7 @@ function genereteDoc(bpmnJS, canvas) {
       if (doc && !ignoretype.includes(type)) {
           var el = canvas.getGraphics(element)
 
-          var dc = doc[0].text
+          var dc = doc[0].text.replaceAll("\n", "</p><p>")
 
           eventElements.push({el, id, type, name,  dc})
       }
