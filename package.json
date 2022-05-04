@@ -1,7 +1,19 @@
 {
     "name": "docsify-bpmnio",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "main": "index.js",
     "author": "gsdenys <gsdenys@gmail.com>",
-    "license": "MIT"
-  }
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gsdenys/docsify-bpmnio.git"
+    },
+    "keywords": [
+        "docsify",
+        "bpmn",
+        "bpmn.io",
+        "bpm",
+        "process",
+        "documentation"
+    ]
+}
